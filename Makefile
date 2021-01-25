@@ -1,6 +1,6 @@
 chi:
-	oapi-codegen -generate "types" -package "domain" openapi.yml > types.gen.go
-	oapi-codegen -generate "chi-server" -package "domain" openapi.yml > server.gen.go
+	oapi-codegen -generate "types" -package "survey" openapi.yml > types.gen.go
+	oapi-codegen -generate "chi-server" -package "survey" openapi.yml > server.gen.go
 
 clean:
 	go clean
