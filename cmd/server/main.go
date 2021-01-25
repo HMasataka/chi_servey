@@ -7,6 +7,9 @@ import (
 	"net/http"
 
 	s "github.com/HMasataka/chi_survey"
+
+	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/middleware"
 )
 
 func main() {
@@ -14,8 +17,13 @@ func main() {
 	flag.Parse()
 
 	petStore := s.NewPets()
-	h := s.Handler(petStore)
 
+	r := chi.NewRouter()
+	r.Use(middleware.RequestID)
+	r.Use(middleware.Logger)
+	r.Use(middleware.Recoverer)
+
+	h := s.HandlerFromMux(petStore, r)
 	s := &http.Server{
 		Handler: h,
 		Addr:    fmt.Sprintf("0.0.0.0:%d", *port),
